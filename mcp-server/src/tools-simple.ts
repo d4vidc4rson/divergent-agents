@@ -18,7 +18,7 @@ export function registerSimpleTool(
   ].join("\n\n");
 
   server.tool(
-    "divergent_think",
+    "divergent_agent",
     description,
     {
       objective: z
@@ -31,7 +31,7 @@ export function registerSimpleTool(
     },
     async ({ objective, context }) => {
       console.error(
-        `[${new Date().toISOString()}] tool_call: divergent_think`
+        `[${new Date().toISOString()}] tool_call: divergent_agent`
       );
 
       const userInput = context
@@ -49,5 +49,5 @@ export function registerSimpleTool(
     }
   );
 
-  console.error("Registered tool: divergent_think (simple mode)");
+  console.error("Registered tool: divergent_agent (simple mode)");
 }
