@@ -1,0 +1,76 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "wrong-problem-detector output",
+  "description": "Structured output from Wrong Problem Detector: diagnosis of whether the stated problem is the right one.",
+  "type": "object",
+  "required": ["skill", "stated_problem", "checks", "verdict"],
+  "additionalProperties": false,
+  "properties": {
+    "skill": {
+      "const": "wrong-problem-detector"
+    },
+    "stated_problem": {
+      "type": "string",
+      "description": "The original problem as stated"
+    },
+    "checks": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "items": {
+        "type": "object",
+        "required": ["name", "fired", "finding"],
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string",
+            "enum": ["symptom", "audience", "verb", "frame", "existence"],
+            "description": "Which of the five checks"
+          },
+          "fired": {
+            "type": "boolean",
+            "description": "Whether this check found a problem with the stated problem"
+          },
+          "finding": {
+            "type": "string",
+            "description": "What this check revealed"
+          }
+        }
+      }
+    },
+    "verdict": {
+      "type": "string",
+      "enum": ["problem_holds", "reframe_needed"],
+      "description": "Whether the stated problem is correct or needs reframing"
+    },
+    "reframes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "problem"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^rf\\d+$",
+            "description": "Reframe identifier, e.g. rf1, rf2"
+          },
+          "problem": {
+            "type": "string",
+            "description": "The reframed problem statement (a problem, not a solution)"
+          },
+          "source_check": {
+            "type": "string",
+            "enum": ["symptom", "audience", "verb", "frame", "existence"],
+            "description": "Which check produced this reframe"
+          }
+        }
+      },
+      "description": "Alternative problem framings if verdict is reframe_needed"
+    },
+    "recommended_reframe": {
+      "type": "string",
+      "description": "ID of the strongest reframe (e.g. rf1)"
+    }
+  }
+}

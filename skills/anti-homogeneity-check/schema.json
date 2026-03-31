@@ -1,0 +1,87 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "anti-homogeneity-check output",
+  "description": "Structured output from the Anti-Homogeneity Check: diversity audit of a set of ideas.",
+  "type": "object",
+  "required": ["skill", "grade", "cluster_count", "clusters", "gaps"],
+  "additionalProperties": false,
+  "properties": {
+    "skill": {
+      "const": "anti-homogeneity-check"
+    },
+    "grade": {
+      "type": "string",
+      "enum": ["A", "B", "C", "D"],
+      "description": "Overall diversity grade. A=genuine portfolio, B=decent spread with gravity well, C=illusion of variety, D=monoculture"
+    },
+    "cluster_count": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Number of distinct clusters found"
+    },
+    "heaviest_cluster": {
+      "type": "string",
+      "description": "Name of the cluster containing the most ideas"
+    },
+    "clusters": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "move", "idea_ids", "count"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^c\\d+$",
+            "description": "Cluster identifier, e.g. c1, c2"
+          },
+          "move": {
+            "type": "string",
+            "description": "The underlying move this cluster makes (verb phrase)"
+          },
+          "idea_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "IDs of ideas belonging to this cluster (references ids from input)"
+          },
+          "count": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Number of ideas in this cluster"
+          }
+        }
+      }
+    },
+    "gaps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "dimension", "description"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^gap\\d+$",
+            "description": "Gap identifier, e.g. gap1, gap2"
+          },
+          "dimension": {
+            "type": "string",
+            "enum": ["time_horizon", "mechanism", "audience", "risk_level", "sub_problem"],
+            "description": "The type of dimension that is missing"
+          },
+          "description": {
+            "type": "string",
+            "description": "What is missing from the set"
+          }
+        }
+      }
+    },
+    "diagnosis": {
+      "type": "string",
+      "description": "Plain-language summary of the diversity assessment"
+    }
+  }
+}

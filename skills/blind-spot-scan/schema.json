@@ -1,0 +1,98 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "blind-spot-scan output",
+  "description": "Structured output from Blind Spot Scan: a map of the full problem space with coverage analysis.",
+  "type": "object",
+  "required": ["skill", "mode", "dimensions"],
+  "additionalProperties": false,
+  "properties": {
+    "skill": {
+      "const": "blind-spot-scan"
+    },
+    "mode": {
+      "type": "string",
+      "enum": ["pre-generation", "post-generation"],
+      "description": "Whether the scan ran before or after ideation"
+    },
+    "dimensions": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 7,
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "regions"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^d\\d+$",
+            "description": "Dimension identifier, e.g. d1, d2"
+          },
+          "name": {
+            "type": "string",
+            "enum": ["stakeholders", "existing_resources", "time_horizons", "strategic_postures", "value_types", "delivery_mechanisms", "failure_modes"],
+            "description": "Which of the seven map dimensions"
+          },
+          "regions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["label", "status"],
+              "additionalProperties": false,
+              "properties": {
+                "label": {
+                  "type": "string",
+                  "description": "Name of the region within this dimension"
+                },
+                "status": {
+                  "type": "string",
+                  "enum": ["covered", "light", "blind_spot", "overweight"],
+                  "description": "Coverage status of this region"
+                },
+                "idea_count": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "description": "Number of ideas addressing this region (post-generation mode)"
+                },
+                "idea_ids": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "IDs of ideas covering this region"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "blind_spots": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "dimension", "region", "question"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^bs\\d+$",
+            "description": "Blind spot identifier, e.g. bs1, bs2"
+          },
+          "dimension": {
+            "type": "string",
+            "description": "Which dimension this blind spot belongs to"
+          },
+          "region": {
+            "type": "string",
+            "description": "The specific empty region"
+          },
+          "question": {
+            "type": "string",
+            "description": "The direct question that would fill this blind spot"
+          }
+        }
+      }
+    }
+  }
+}

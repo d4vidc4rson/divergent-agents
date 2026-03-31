@@ -1,0 +1,75 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "bad-on-purpose output",
+  "description": "Structured output from Bad on Purpose: deliberately terrible ideas with reverse-engineered value.",
+  "type": "object",
+  "required": ["skill", "bad_ideas", "extracted_value"],
+  "additionalProperties": false,
+  "properties": {
+    "skill": {
+      "const": "bad-on-purpose"
+    },
+    "bad_ideas": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 7,
+      "items": {
+        "type": "object",
+        "required": ["id", "bad_idea", "assumption_violated", "door_opened"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^b\\d+$",
+            "description": "Unique idea identifier, e.g. b1, b2"
+          },
+          "bad_idea": {
+            "type": "string",
+            "description": "The deliberately terrible idea (one sentence)"
+          },
+          "assumption_violated": {
+            "type": "string",
+            "description": "The rule or assumption this bad idea breaks"
+          },
+          "five_percent_version": {
+            "type": "string",
+            "description": "A toned-down version that is just weird enough to be interesting and viable"
+          },
+          "door_opened": {
+            "type": "string",
+            "description": "The direction or territory this bad idea pointed toward"
+          }
+        }
+      }
+    },
+    "extracted_value": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "source_id", "type", "value"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^bv\\d+$",
+            "description": "Extracted value identifier, e.g. bv1, bv2"
+          },
+          "source_id": {
+            "type": "string",
+            "description": "ID of the bad idea this came from (e.g. b1)"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["five_percent_version", "door"],
+            "description": "Whether this is a viable toned-down idea or a direction to explore"
+          },
+          "value": {
+            "type": "string",
+            "description": "The actionable insight or direction"
+          }
+        }
+      },
+      "description": "Clean list of the 5% versions and opened doors — the actual outputs"
+    }
+  }
+}

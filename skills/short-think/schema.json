@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "short-think output",
+  "description": "Structured output from Short Think: rapid gut-level ideas with no deliberation.",
+  "type": "object",
+  "required": ["skill", "ideas"],
+  "additionalProperties": false,
+  "properties": {
+    "skill": {
+      "const": "short-think"
+    },
+    "ideas": {
+      "type": "array",
+      "minItems": 15,
+      "items": {
+        "type": "object",
+        "required": ["id", "idea"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^st\\d+$",
+            "description": "Unique idea identifier, e.g. st1, st2, st3"
+          },
+          "idea": {
+            "type": "string",
+            "description": "The idea in 1-2 sentences max, no explanation or justification"
+          }
+        }
+      }
+    }
+  }
+}

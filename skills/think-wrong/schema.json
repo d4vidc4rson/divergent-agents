@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "think-wrong output",
+  "description": "Structured output from Think Wrong: a counterintuitive position that escapes consensus.",
+  "type": "object",
+  "required": ["skill", "convergence_point", "position", "expert_pushback"],
+  "additionalProperties": false,
+  "properties": {
+    "skill": {
+      "const": "think-wrong"
+    },
+    "convergence_point": {
+      "type": "string",
+      "description": "The consensus answer every other model/professional would give (one sentence)"
+    },
+    "position": {
+      "type": "string",
+      "description": "The counterintuitive argument as continuous prose (no lists, no headers)"
+    },
+    "expert_pushback": {
+      "type": "string",
+      "description": "What a credentialed expert would find threatening about this position"
+    },
+    "transfer_domain": {
+      "type": "string",
+      "description": "The unrelated domain routed through for the domain transfer"
+    },
+    "banned_vocabulary": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Domain-specific words that were banned during generation"
+    }
+  }
+}

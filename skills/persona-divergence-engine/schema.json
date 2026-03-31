@@ -1,0 +1,120 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "persona-divergence-engine output",
+  "description": "Structured output from the Persona Divergence Engine: ideas generated through radically different constructed personas.",
+  "type": "object",
+  "required": ["skill", "personas", "collisions"],
+  "additionalProperties": false,
+  "properties": {
+    "skill": {
+      "const": "persona-divergence-engine"
+    },
+    "personas": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 7,
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "instinct", "kills", "ideas"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^p\\d+$",
+            "description": "Persona identifier, e.g. p1, p2"
+          },
+          "name": {
+            "type": "string",
+            "description": "Persona name (e.g. The Reckless Practitioner)"
+          },
+          "instinct": {
+            "type": "string",
+            "description": "What this persona reaches for first"
+          },
+          "kills": {
+            "type": "string",
+            "description": "What this persona can't tolerate in ideas"
+          },
+          "ideas": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 3,
+            "items": {
+              "type": "object",
+              "required": ["id", "idea"],
+              "additionalProperties": false,
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "pattern": "^pi\\d+$",
+                  "description": "Persona idea identifier, e.g. pi1, pi2"
+                },
+                "idea": {
+                  "type": "string",
+                  "description": "The idea in this persona's voice (one sentence)"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "collisions": {
+      "type": "object",
+      "required": ["singularities"],
+      "additionalProperties": false,
+      "properties": {
+        "singularities": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Idea IDs that only one persona produced — the most valuable ones"
+        },
+        "unexpected_agreements": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["idea_ids", "description"],
+            "additionalProperties": false,
+            "properties": {
+              "idea_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "IDs of ideas from different personas that converged"
+              },
+              "description": {
+                "type": "string",
+                "description": "What the dissimilar personas agreed on"
+              }
+            }
+          }
+        },
+        "productive_conflicts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["idea_a", "idea_b", "tension"],
+            "additionalProperties": false,
+            "properties": {
+              "idea_a": {
+                "type": "string",
+                "description": "ID of the first opposing idea"
+              },
+              "idea_b": {
+                "type": "string",
+                "description": "ID of the second opposing idea"
+              },
+              "tension": {
+                "type": "string",
+                "description": "The fork in the road between these opposing ideas"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "wild-to-mild output",
+  "description": "Structured output from Wild to Mild: ideas at deliberate points along the originality-feasibility spectrum.",
+  "type": "object",
+  "required": ["skill", "altitudes", "tradeoff"],
+  "additionalProperties": false,
+  "properties": {
+    "skill": {
+      "const": "wild-to-mild"
+    },
+    "altitudes": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": {
+        "type": "object",
+        "required": ["level", "question", "ideas"],
+        "additionalProperties": false,
+        "properties": {
+          "level": {
+            "type": "string",
+            "enum": ["monday_morning", "this_quarter", "stretch", "moonshot"],
+            "description": "The altitude on the spectrum"
+          },
+          "question": {
+            "type": "string",
+            "description": "The guiding question for this altitude"
+          },
+          "ideas": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 4,
+            "items": {
+              "type": "object",
+              "required": ["id", "idea"],
+              "additionalProperties": false,
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "pattern": "^w\\d+$",
+                  "description": "Unique idea identifier, e.g. w1, w2"
+                },
+                "idea": {
+                  "type": "string",
+                  "description": "The idea (1-2 sentences)"
+                },
+                "condition": {
+                  "type": "string",
+                  "description": "For stretch: 'This works if ___'. For moonshot: 'If this works, ___'"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "ladders": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["from_id", "to_id", "connection"],
+        "additionalProperties": false,
+        "properties": {
+          "from_id": {
+            "type": "string",
+            "description": "ID of the lower-altitude idea"
+          },
+          "to_id": {
+            "type": "string",
+            "description": "ID of the higher-altitude idea it enables"
+          },
+          "connection": {
+            "type": "string",
+            "description": "How the lower idea funds or enables the higher one"
+          }
+        }
+      },
+      "description": "Connections where a lower-altitude idea enables a higher-altitude one"
+    },
+    "tradeoff": {
+      "type": "object",
+      "required": ["low_gets", "high_gets"],
+      "additionalProperties": false,
+      "properties": {
+        "low_gets": {
+          "type": "string",
+          "description": "What staying at Altitude 1-2 provides"
+        },
+        "high_gets": {
+          "type": "string",
+          "description": "What going to Altitude 3-4 provides"
+        }
+      }
+    }
+  }
+}

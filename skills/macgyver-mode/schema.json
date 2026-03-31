@@ -1,0 +1,74 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "macgyver-mode output",
+  "description": "Structured output from MacGyver Mode: solutions built from existing resources only.",
+  "type": "object",
+  "required": ["skill", "inventory", "ideas"],
+  "additionalProperties": false,
+  "properties": {
+    "skill": {
+      "const": "macgyver-mode"
+    },
+    "inventory": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "category", "resource", "non_default_uses"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^inv\\d+$",
+            "description": "Inventory item identifier, e.g. inv1, inv2"
+          },
+          "category": {
+            "type": "string",
+            "enum": ["people", "audience", "knowledge", "technology", "relationships", "physical_assets", "budget", "credibility"],
+            "description": "Resource category"
+          },
+          "resource": {
+            "type": "string",
+            "description": "Specific description of the existing resource"
+          },
+          "non_default_uses": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1,
+            "description": "2-3 alternative uses beyond the default"
+          }
+        }
+      }
+    },
+    "ideas": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 12,
+      "items": {
+        "type": "object",
+        "required": ["id", "idea", "resources_used"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^m\\d+$",
+            "description": "Unique idea identifier, e.g. m1, m2"
+          },
+          "idea": {
+            "type": "string",
+            "description": "The constrained solution (1-2 sentences)"
+          },
+          "resources_used": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 2,
+            "description": "Inventory item IDs combined in this idea (e.g. ['inv1', 'inv3'])"
+          }
+        }
+      }
+    }
+  }
+}

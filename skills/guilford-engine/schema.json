@@ -1,0 +1,51 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "guilford-engine output",
+  "description": "Structured output from the Guilford Engine: genuinely divergent ideas generated across five cognitive dimensions.",
+  "type": "object",
+  "required": ["skill", "ideas", "default_answer"],
+  "additionalProperties": false,
+  "properties": {
+    "skill": {
+      "const": "guilford-engine"
+    },
+    "ideas": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 15,
+      "items": {
+        "type": "object",
+        "required": ["id", "problem", "idea", "feasibility"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^g\\d+$",
+            "description": "Unique idea identifier, e.g. g1, g2, g3"
+          },
+          "problem": {
+            "type": "string",
+            "description": "The sub-problem this idea addresses (one sentence)"
+          },
+          "idea": {
+            "type": "string",
+            "description": "The idea itself (one sentence)"
+          },
+          "feasibility": {
+            "type": "string",
+            "enum": ["Now", "Soon", "Stretch", "Moonshot"],
+            "description": "Implementation feasibility tag from the Pareto front"
+          },
+          "feasibility_condition": {
+            "type": "string",
+            "description": "For Stretch/Moonshot: what would need to be true for this to work"
+          }
+        }
+      }
+    },
+    "default_answer": {
+      "type": "string",
+      "description": "The obvious approach every other AI would give first"
+    }
+  }
+}

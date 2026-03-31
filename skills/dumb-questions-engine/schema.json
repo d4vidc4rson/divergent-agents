@@ -1,0 +1,72 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "dumb-questions-engine output",
+  "description": "Structured output from the Dumb Questions Engine: questions that open doors, not answers.",
+  "type": "object",
+  "required": ["skill", "territory", "assumptions", "questions", "starred"],
+  "additionalProperties": false,
+  "properties": {
+    "skill": {
+      "const": "dumb-questions-engine"
+    },
+    "territory": {
+      "type": "string",
+      "description": "The space the problem lives in (one level wider than the problem itself)"
+    },
+    "assumptions": {
+      "type": "array",
+      "minItems": 8,
+      "maxItems": 12,
+      "items": {
+        "type": "object",
+        "required": ["id", "assumption"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^a\\d+$",
+            "description": "Assumption identifier, e.g. a1, a2"
+          },
+          "assumption": {
+            "type": "string",
+            "description": "Something everyone in this territory takes for granted"
+          }
+        }
+      }
+    },
+    "questions": {
+      "type": "array",
+      "minItems": 15,
+      "maxItems": 20,
+      "items": {
+        "type": "object",
+        "required": ["id", "question"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^q\\d+$",
+            "description": "Question identifier, e.g. q1, q2"
+          },
+          "question": {
+            "type": "string",
+            "description": "A question nobody in this territory is asking"
+          },
+          "challenges_assumption": {
+            "type": "string",
+            "description": "ID of the assumption this question challenges (e.g. a1)"
+          }
+        }
+      }
+    },
+    "starred": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 3,
+      "maxItems": 5,
+      "description": "IDs of the 3-5 most dangerous questions — the ones that make experts flinch"
+    }
+  }
+}

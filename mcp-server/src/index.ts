@@ -7,16 +7,17 @@ import * as path from "path";
 import { loadSkills } from "./skills.js";
 import { registerSimpleTool } from "./tools-simple.js";
 import { registerProTools } from "./tools-pro.js";
+import { registerComposableTools } from "./tools-composable.js";
 
 // ---------------------------------------------------------------------------
 // MODE: "simple" (default) | "pro" | "all"
 // ---------------------------------------------------------------------------
 
-type Mode = "simple" | "pro" | "all";
+type Mode = "simple" | "pro" | "composable" | "all";
 
 function getMode(): Mode {
   const raw = (process.env.MODE || "simple").toLowerCase();
-  if (raw === "simple" || raw === "pro" || raw === "all") return raw;
+  if (raw === "simple" || raw === "pro" || raw === "composable" || raw === "all") return raw;
   console.error(`Unknown MODE "${raw}", falling back to "simple"`);
   return "simple";
 }
@@ -37,8 +38,12 @@ function createServer(skillsDir: string): McpServer {
     registerSimpleTool(server, skillsDir);
   }
 
-  if (mode === "pro" || mode === "all") {
+  if (mode === "pro") {
     registerProTools(server, skillsDir);
+  }
+
+  if (mode === "composable" || mode === "all") {
+    registerComposableTools(server, skillsDir);
   }
 
   console.error(`Server configured in "${mode}" mode`);

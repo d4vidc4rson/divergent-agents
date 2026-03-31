@@ -1,0 +1,46 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "strip-down output",
+  "description": "Structured output from Strip Down: the raw human desire extracted from a professional brief.",
+  "type": "object",
+  "required": ["skill", "desire_statement", "who", "specific_details"],
+  "additionalProperties": false,
+  "properties": {
+    "skill": {
+      "const": "strip-down"
+    },
+    "desire_statement": {
+      "type": "string",
+      "description": "The raw human desire in blunt, honest language (1-3 sentences)"
+    },
+    "who": {
+      "type": "string",
+      "description": "The human being or system at the center of the problem, described in private language"
+    },
+    "specific_details": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "The specific details that give the desire teeth and distinguish it from the generic version"
+    },
+    "stripped_elements": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Professional language and anchoring details that were stripped away"
+    },
+    "concerns": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "1-2 specific concerns about the framing that need user confirmation"
+    },
+    "confirmed": {
+      "type": "boolean",
+      "description": "Whether the user has confirmed the desire statement"
+    }
+  }
+}

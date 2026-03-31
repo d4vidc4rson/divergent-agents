@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "de-slop output",
+  "description": "Structured output from De-Slop: AI text transformed into authentic human-sounding copy.",
+  "type": "object",
+  "required": ["skill", "intensity", "original", "transformed"],
+  "additionalProperties": false,
+  "properties": {
+    "skill": {
+      "const": "de-slop"
+    },
+    "intensity": {
+      "type": "string",
+      "enum": ["light", "medium", "heavy"],
+      "description": "Transformation intensity level. Light=professional warm, Medium=casual professional, Heavy=11pm energy"
+    },
+    "context": {
+      "type": "string",
+      "description": "Where the text is going (email, LinkedIn, Slack, marketing copy, etc.)"
+    },
+    "original": {
+      "type": "string",
+      "description": "The original AI-generated text"
+    },
+    "transformed": {
+      "type": "string",
+      "description": "The humanized version of the text"
+    },
+    "changes_applied": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "vocabulary_exorcism",
+          "structure_decay",
+          "punctuation_humanization",
+          "typo_injection",
+          "verbal_tics",
+          "energy_inconsistency"
+        ]
+      },
+      "description": "Which transformation categories were applied"
+    }
+  }
+}

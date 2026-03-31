@@ -75,3 +75,43 @@ export function loadSkill(skillsDir: string, dirName: string): Skill {
   const content = fs.readFileSync(skillFile, "utf-8");
   return parseFrontmatter(content);
 }
+
+// ---------------------------------------------------------------------------
+// V2 loader — lean protocols + schemas for composable mode
+// ---------------------------------------------------------------------------
+
+export interface SkillV2 {
+  name: string;
+  description: string;
+  protocol: string; // lean protocol.md or fallback to full SKILL.md body
+  schema: object; // parsed schema.json or empty object
+  body: string; // full SKILL.md (backward compat)
+}
+
+export function loadProtocol(skillsDir: string, dirName: string): string {
+  const protocolFile = path.join(skillsDir, dirName, "protocol.md");
+  if (fs.existsSync(protocolFile)) {
+    return fs.readFileSync(protocolFile, "utf-8");
+  }
+  // Fallback: use full SKILL.md until protocol.md is created
+  return loadSkill(skillsDir, dirName).body;
+}
+
+export function loadSchema(skillsDir: string, dirName: string): object {
+  const schemaFile = path.join(skillsDir, dirName, "schema.json");
+  if (fs.existsSync(schemaFile)) {
+    return JSON.parse(fs.readFileSync(schemaFile, "utf-8"));
+  }
+  return {}; // empty schema = no constraint
+}
+
+export function loadSkillV2(skillsDir: string, dirName: string): SkillV2 {
+  const skill = loadSkill(skillsDir, dirName);
+  return {
+    name: skill.name,
+    description: skill.description,
+    protocol: loadProtocol(skillsDir, dirName),
+    schema: loadSchema(skillsDir, dirName),
+    body: skill.body,
+  };
+}
