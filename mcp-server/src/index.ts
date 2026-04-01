@@ -148,6 +148,10 @@ async function main() {
         );
         if (sessionId && sessions[sessionId]) {
           await sessions[sessionId].transport.handleRequest(req, res);
+        } else if (!sessionId) {
+          // No session — likely a health/connectivity check from an MCP client
+          res.writeHead(200, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ status: "ok", protocol: "mcp", mode: getMode() }));
         } else {
           res.writeHead(400);
           res.end("Invalid session");
