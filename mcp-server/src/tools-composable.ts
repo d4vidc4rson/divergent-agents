@@ -1,9 +1,11 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 import { loadSkillV2 } from "./skills.js";
+import { DomainConfig } from "./domains/types.js";
 
 // ---------------------------------------------------------------------------
 // Composable mode — 14 tools with structured JSON output + prior_output chaining
+// Optional domain config injects personality + chaining hints into responses
 // ---------------------------------------------------------------------------
 
 // Per-tool presentation instructions — injected into the RESPONSE, not the description.
@@ -116,12 +118,18 @@ const TOOL_CONFIG: Array<{ toolName: string; skillDir: string }> = [
 
 export function registerComposableTools(
   server: McpServer,
-  skillsDir: string
+  skillsDir: string,
+  domain?: DomainConfig
 ): void {
   for (const { toolName, skillDir } of TOOL_CONFIG) {
     const skill = loadSkillV2(skillsDir, skillDir);
     const hasSchema = Object.keys(skill.schema).length > 0;
-    const presentation = PRESENTATION[toolName] || "";
+
+    // Domain can override presentation per tool; fall back to defaults
+    const presentation =
+      domain?.presentationOverrides?.[toolName] ??
+      PRESENTATION[toolName] ??
+      "";
 
     // Description is minimal — just what the tool is and when to use it.
     // All execution and presentation instructions go in the response.
@@ -150,10 +158,17 @@ export function registerComposableTools(
       },
       async ({ objective, context, prior_output }) => {
         console.error(
-          `[${new Date().toISOString()}] tool_call: ${toolName} (composable) prior_output=${!!prior_output}`
+          `[${new Date().toISOString()}] tool_call: ${toolName} (composable${domain ? `, domain=${domain.id}` : ""}) prior_output=${!!prior_output}`
         );
 
-        let assembled = skill.protocol;
+        let assembled = "";
+
+        // Inject domain personality at the top of every response
+        if (domain) {
+          assembled += `## Voice & Perspective\n\n${domain.personality}\n\n---\n\n`;
+        }
+
+        assembled += skill.protocol;
 
         // Append output schema if available
         if (hasSchema) {
@@ -166,6 +181,11 @@ export function registerComposableTools(
         // Append presentation instructions
         if (presentation) {
           assembled += `\n\n---\n\n${presentation}`;
+        }
+
+        // Inject domain chaining hints — what to do next
+        if (domain?.chainingHints[toolName]) {
+          assembled += `\n\n---\n\n## What to Do Next\n\n${domain.chainingHints[toolName]}`;
         }
 
         // Inject prior output as context
@@ -193,5 +213,55 @@ export function registerComposableTools(
     );
 
     console.error(`Registered composable tool: ${toolName}`);
+  }
+
+  // Register the domain's front-door agent tool
+  if (domain) {
+    const agentToolName = `${domain.id}_agent`;
+
+    server.tool(
+      agentToolName,
+      domain.agentToolDescription,
+      {
+        objective: z
+          .string()
+          .describe("What the user is trying to accomplish"),
+        context: z
+          .string()
+          .optional()
+          .describe("Additional context, constraints, or background"),
+      },
+      async ({ objective, context }) => {
+        console.error(
+          `[${new Date().toISOString()}] tool_call: ${agentToolName} (front-door)`
+        );
+
+        let assembled = `## ${domain.name}\n\n`;
+        assembled += `${domain.personality}\n\n---\n\n`;
+        assembled += `${domain.flows}\n\n---\n\n`;
+        assembled += `## How Tools Work\n\n`;
+        assembled += `Each tool returns a creative protocol. Execute the protocol and present results naturally. `;
+        assembled += `When chaining tools, pass the JSON output from one tool as \`prior_output\` to the next. `;
+        assembled += `The user never sees raw JSON — translate everything into natural language.\n\n`;
+        assembled += `---\n\n`;
+
+        const userInput = context
+          ? `**Objective:** ${objective}\n\n**Context:** ${context}`
+          : `**Objective:** ${objective}`;
+        assembled += userInput;
+        assembled += `\n\nBased on the objective above, decide which flow and tool to start with. Call that tool now.`;
+
+        return {
+          content: [
+            {
+              type: "text" as const,
+              text: assembled,
+            },
+          ],
+        };
+      }
+    );
+
+    console.error(`Registered front-door agent tool: ${agentToolName}`);
   }
 }
