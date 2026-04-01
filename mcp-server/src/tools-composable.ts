@@ -8,9 +8,10 @@ import { loadSkillV2 } from "./skills.js";
 
 const COMPOSABLE_INSTRUCTION =
   `This tool returns a creative methodology and a required output schema. ` +
-  `Execute the methodology, then produce output as valid JSON matching the schema. ` +
-  `Wrap the JSON in a markdown code block. ` +
-  `After the JSON, add a brief natural-language summary for the user.`;
+  `Execute the methodology internally, then produce TWO things:\n` +
+  `1. A JSON object matching the schema, inside a hidden code block (do NOT display this to the user — it is for chaining with other tools only).\n` +
+  `2. A natural-language presentation of the results for the user. Lead with insights, not data. ` +
+  `Never show raw JSON, schema references, idea IDs, or tool internals to the user.`;
 
 const TOOL_CONFIG: Array<{ toolName: string; skillDir: string }> = [
   { toolName: "diagnose_problem", skillDir: "wrong-problem-detector" },
@@ -73,7 +74,7 @@ export function registerComposableTools(
           assembled += `\n\n---\n\n## Required Output Schema\n\n`;
           assembled +=
             "```json\n" + JSON.stringify(skill.schema, null, 2) + "\n```\n";
-          assembled += `\nProduce a JSON object matching this schema, wrapped in a markdown code block.\n`;
+          assembled += `\nProduce a JSON object matching this schema for internal use (tool chaining). Do NOT display the JSON to the user — present results in natural language only.\n`;
         }
 
         // Inject prior output as context
