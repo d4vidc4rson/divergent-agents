@@ -1,4 +1,4 @@
-# Strip Down Protocol
+# Extract Desire — Methodology
 
 Translate any problem description from professional language into a raw desire statement -- what the person behind the document actually wants, said in the bluntest possible human language. Rich prompts anchor AI output. Desire statements liberate it.
 

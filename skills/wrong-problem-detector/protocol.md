@@ -1,4 +1,4 @@
-# Wrong Problem Detector Protocol
+# Diagnose Problem — Methodology
 
 Before generating solutions, run five checks on the problem itself. When every solution to a problem feels mediocre, the problem is usually mislabeled -- you're optimizing the wrong variable. Five minutes confirming the right problem saves hours of brilliant answers to the wrong one.
 

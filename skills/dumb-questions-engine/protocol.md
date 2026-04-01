@@ -1,4 +1,4 @@
-# Dumb Questions Engine Protocol
+# Ask Questions — Methodology
 
 Generate questions, not answers. The quality of answers is capped by the quality of questions. A dumb question nobody's asking can unlock answers nobody's considered.
 

@@ -1,4 +1,4 @@
-# Think Wrong Protocol
+# Think Wrong — Methodology
 
 Escape the consensus distribution. Every field has a default answer that surfaces before the question is finished. Your job is to get past it into territory that experts defend against because it threatens what they know.
 

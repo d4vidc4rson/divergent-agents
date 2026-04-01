@@ -1,4 +1,4 @@
-# Random Injection Protocol
+# Inject Random — Methodology
 
 Inject a genuinely random, unrelated concept into a problem and force deep structural connections -- mechanism transfer, not metaphor.
 

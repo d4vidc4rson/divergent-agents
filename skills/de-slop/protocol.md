@@ -1,4 +1,4 @@
-# De-Slop Protocol
+# Humanize Text — Methodology
 
 Transform sterile AI output into text that reads like a real person wrote it. AI text fails the human test not because it's wrong but because it's too right.
 

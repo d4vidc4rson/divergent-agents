@@ -1,4 +1,4 @@
-# MacGyver Mode Protocol
+# Generate Constrained — Methodology
 
 Force creative solutions using only resources already available. Three steps: Inventory, Reframe, Combine.
 

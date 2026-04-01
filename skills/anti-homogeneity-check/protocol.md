@@ -1,4 +1,4 @@
-# Anti-Homogeneity Check Protocol
+# Audit Diversity — Methodology
 
 Post-generation diversity audit. Takes any list of ideas and reveals how many genuinely different ideas exist underneath the surface variety.
 

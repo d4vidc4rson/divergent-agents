@@ -1,4 +1,4 @@
-# Wild to Mild Protocol
+# Explore Range — Methodology
 
 Generate ideas at four deliberate points on the originality-feasibility spectrum. Not mixed together. Each altitude is its own section with its own rules.
 

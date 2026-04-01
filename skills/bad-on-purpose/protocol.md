@@ -1,4 +1,4 @@
-# Bad on Purpose Protocol
+# Generate Bad — Methodology
 
 Two phases. Never combine them. Phase 1 is generation. Phase 2 is excavation. They use opposite cognitive muscles.
 

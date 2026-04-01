@@ -1,4 +1,4 @@
-# Short Think Protocol
+# Generate Fast — Methodology
 
 Kill deliberation. Produce compressed, high-conviction creative output at volume. Longer thinking does not produce better ideas -- deliberation retreats toward safety, and every additional sentence of reasoning is a chance to talk yourself out of the interesting answer and into the defensible one.
 

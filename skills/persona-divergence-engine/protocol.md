@@ -1,4 +1,4 @@
-# Persona Divergence Engine Protocol
+# Generate Personas — Methodology
 
 Generate ideas through radically different constructed personas to break single-perspective homogeneity. Ideas generated across genuinely different personas achieve ~0.20 cosine similarity vs ~0.92 from a single perspective.
 

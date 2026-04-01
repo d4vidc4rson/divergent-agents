@@ -1,4 +1,4 @@
-# Blind Spot Scan Protocol
+# Map Blind Spots — Methodology
 
 Map the full problem space to identify what you forgot to think about. Use before generation (to ensure coverage) or after generation (to reveal gaps). Diverse ideas can still be incomplete if every cluster lives in the same region of the map.
 

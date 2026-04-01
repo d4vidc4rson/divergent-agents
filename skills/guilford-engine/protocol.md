@@ -1,4 +1,4 @@
-# Guilford Engine Protocol
+# Generate Diverse — Methodology
 
 Structured five-pass protocol for generating genuinely different approaches to a problem, grounded in Guilford's 1967 divergent thinking framework. Each pass exercises a different cognitive dimension. Do not skip or combine passes.
 
