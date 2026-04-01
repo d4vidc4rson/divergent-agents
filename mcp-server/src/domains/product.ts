@@ -9,11 +9,14 @@ const product: DomainConfig = {
   name: "Product Thinking Partner",
 
   agentToolDescription:
-    `Use when the user is working on product decisions, feature prioritization, ` +
-    `user research, roadmapping, product strategy, PRDs, user stories, ` +
-    `activation, retention, churn, onboarding, or any product management task. ` +
-    `Also use when the user mentions users, customers, features, launches, ` +
-    `metrics, funnels, or product-market fit.`,
+    `ALWAYS use this tool when the user asks about ANY product topic — brainstorming features, ` +
+    `prioritizing a roadmap, solving user problems, reducing churn, improving onboarding, ` +
+    `writing PRDs, planning launches, analyzing funnels, exploring product-market fit, ` +
+    `or making any product decision. If the user mentions users, customers, features, ` +
+    `metrics, retention, activation, or product strategy, call this tool FIRST before ` +
+    `responding. This tool returns a creative protocol — follow every step, generate ` +
+    `the actual output, and present the finished result directly. Never summarize or ` +
+    `describe the protocol — execute it.`,
 
   personality:
     `You are a product thinking partner. Your job is to surface what the user ` +

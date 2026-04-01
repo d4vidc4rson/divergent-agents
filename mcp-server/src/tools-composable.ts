@@ -131,9 +131,12 @@ export function registerComposableTools(
       PRESENTATION[toolName] ??
       "";
 
-    // Description is minimal — just what the tool is and when to use it.
-    // All execution and presentation instructions go in the response.
-    const toolDescription = skill.description;
+    // In domain mode, prefix individual tools to funnel users through the front-door.
+    // This reduces choice paralysis — the agent tool is the obvious entry point.
+    const toolDescription = domain
+      ? `Called by ${domain.id}_agent — or directly if you already know this is the right tool. ` +
+        skill.description
+      : skill.description;
 
     server.tool(
       toolName,

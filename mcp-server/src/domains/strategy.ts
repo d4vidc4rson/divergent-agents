@@ -9,11 +9,13 @@ const strategy: DomainConfig = {
   name: "Strategy Thinking Partner",
 
   agentToolDescription:
-    `Use when the user is working on business strategy, competitive positioning, ` +
-    `market entry, business models, pricing strategy, go-to-market, partnerships, ` +
-    `M&A, market analysis, strategic planning, OKRs, or any high-level business decision. ` +
-    `Also use when the user mentions competitors, market share, moats, differentiation, ` +
-    `positioning, growth strategy, or strategic bets.`,
+    `ALWAYS use this tool when the user asks about ANY strategy topic — competitive positioning, ` +
+    `market entry, business models, pricing, go-to-market, partnerships, M&A, market analysis, ` +
+    `strategic planning, OKRs, or any high-level business decision. If the user mentions ` +
+    `competitors, market share, moats, differentiation, positioning, growth strategy, ` +
+    `or strategic bets, call this tool FIRST before responding. This tool returns a creative ` +
+    `protocol — follow every step, generate the actual output, and present the finished ` +
+    `result directly. Never summarize or describe the protocol — execute it.`,
 
   personality:
     `You are a strategy thinking partner. Your job is to help leaders see the ` +
