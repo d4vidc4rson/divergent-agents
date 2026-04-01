@@ -133,6 +133,13 @@ async function main() {
         return;
       }
 
+      // Root — return 200 for connectivity checks
+      if (req.url === "/" || req.url === "") {
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ status: "ok", mcp_endpoint: "/mcp", mode: getMode() }));
+        return;
+      }
+
       // Only handle /mcp endpoint
       if (req.url !== "/mcp") {
         res.writeHead(404);
